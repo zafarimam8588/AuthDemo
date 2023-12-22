@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label for="input1">submit the text</label><br>
+    <input type="text" id="input1" placeholder="Type data for Button 1"><br>
+    <button onclick="submitData()">Button 1 (Submit)</button><br>
+    <label for="input2">search the text</label><br>
+    <input type="text" id="input2" placeholder="Type data for Button 2"><br>
+    <button onclick="searchData()">Button 2 (Search)</button><br>
+
+  <button onclick="clearCookies()">Button 3 (Clear Cookies)</button>
+  <button onclick="logout()">Button 4 (Logout)</button>
+
+  <div id="messageContainer"></div>
+  <script>
+    function submitData() {
+      var data1 = document.getElementById('input1').value;
+      document.cookie = "data1=" + data1;
+      showMessage("Data submitted successfully!");
+    }
+
+    function searchData() {
+      var data2 = document.getElementById('input2').value;
+      var cookies = document.cookie.split(';');
+      var foundData = cookies.find(cookie => cookie.trim().startsWith("data1=" + data2));
+
+      if (foundData) {
+        showMessage("Data found: " + foundData.trim().substring("data1=".length));
+      } else {
+        showMessage("Data not found!");
+      }
+    }
+
+    function clearCookies() {
+      document.cookie = "data1=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      showMessage("Cookies cleared!");
+    }
+
+    function logout() {
+      window.location.href = "/login";
+    }
+
+    function showMessage(message) {
+      let messageContainer = document.getElementById('messageContainer');
+      messageContainer.innerHTML = '<p>' + message + '</p>';
+    }
+  </script>
+</body>
+</html>
